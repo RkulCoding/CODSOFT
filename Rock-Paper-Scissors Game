@@ -1,0 +1,80 @@
+import random
+
+def get_computer_choice():
+    """
+    Generate a random choice for the computer.
+    
+    Returns:
+        str: The computer's choice (rock, paper, or scissors).
+    """
+    choices = ["rock", "paper", "scissors"]
+    return random.choice(choices)
+
+def determine_winner(user_choice, computer_choice):
+    """
+    Determine the winner of the game.
+    
+    Args:
+        user_choice (str): The user's choice.
+        computer_choice (str): The computer's choice.
+    
+    Returns:
+        str: The result ("win", "lose", or "tie").
+    """
+    if user_choice == computer_choice:
+        return "tie"
+    elif (user_choice == "rock" and computer_choice == "scissors") or \
+         (user_choice == "scissors" and computer_choice == "paper") or \
+         (user_choice == "paper" and computer_choice == "rock"):
+        return "win"
+    else:
+        return "lose"
+
+def main():
+    print("Welcome to Rock-Paper-Scissors!")
+    print("Type 'rock', 'paper', or 'scissors' to play.")
+    print("Type 'quit' to exit the game.\n")
+    
+    user_score = 0
+    computer_score = 0
+
+    while True:
+        # Get user input
+        user_choice = input("Enter your choice: ").strip().lower()
+        
+        if user_choice == "quit":
+            print("Thanks for playing!")
+            break
+        if user_choice not in ["rock", "paper", "scissors"]:
+            print("Invalid choice. Please choose 'rock', 'paper', or 'scissors'.")
+            continue
+        
+        # Get computer choice
+        computer_choice = get_computer_choice()
+        
+        # Determine the winner
+        result = determine_winner(user_choice, computer_choice)
+        
+        # Update and display scores
+        if result == "win":
+            print(f"You chose {user_choice}, computer chose {computer_choice}. You win!")
+            user_score += 1
+        elif result == "lose":
+            print(f"You chose {user_choice}, computer chose {computer_choice}. You lose!")
+            computer_score += 1
+        else:
+            print(f"You chose {user_choice}, computer chose {computer_choice}. It's a tie!")
+        
+        print(f"Score: You {user_score} - {computer_score} Computer\n")
+        
+        # Ask if the user wants to play again
+        play_again = input("Do you want to play again? (yes/no): ").strip().lower()
+        if play_again != "yes":
+            print("Final Score:")
+            print(f"You: {user_score}")
+            print(f"Computer: {computer_score}")
+            print("Goodbye!")
+            break
+
+if __name__ == "__main__":
+    main()
