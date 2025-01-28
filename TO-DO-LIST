@@ -1,0 +1,96 @@
+# To-Do List Application
+todo_list = []
+
+def add_task():
+    """
+    Add a new task to the to-do list.
+    """
+    task = input("Enter the task: ").strip()
+    if task:
+        todo_list.append({"task": task, "status": "Pending"})
+        print("Task added successfully!")
+    else:
+        print("Task cannot be empty.")
+
+def view_tasks():
+    """
+    View all tasks in the to-do list.
+    """
+    if not todo_list:
+        print("No tasks in the to-do list.")
+    else:
+        print("\nTo-Do List:")
+        print("-" * 40)
+        for i, item in enumerate(todo_list, 1):
+            print(f"{i}. {item['task']} - {item['status']}")
+        print("-" * 40)
+
+def update_task():
+    """
+    Update an existing task or mark it as complete.
+    """
+    view_tasks()
+    try:
+        task_number = int(input("Enter the task number to update: "))
+        if 1 <= task_number <= len(todo_list):
+            print("Leave the task description blank if you only want to change the status.")
+            new_task = input("Enter the updated task description (or leave blank): ").strip()
+            if new_task:
+                todo_list[task_number - 1]["task"] = new_task
+            
+            status = input("Enter the new status (Pending/Completed): ").strip()
+            if status.lower() in ["pending", "completed"]:
+                todo_list[task_number - 1]["status"] = status.capitalize()
+                print("Task updated successfully!")
+            else:
+                print("Invalid status. Task was not updated.")
+        else:
+            print("Invalid task number.")
+    except ValueError:
+        print("Invalid input. Please enter a valid task number.")
+
+def delete_task():
+    """
+    Delete a task from the to-do list.
+    """
+    view_tasks()
+    try:
+        task_number = int(input("Enter the task number to delete: "))
+        if 1 <= task_number <= len(todo_list):
+            deleted_task = todo_list.pop(task_number - 1)
+            print(f"Task '{deleted_task['task']}' deleted successfully!")
+        else:
+            print("Invalid task number.")
+    except ValueError:
+        print("Invalid input. Please enter a valid task number.")
+
+def main():
+    """
+    Main function to display the menu and handle user choices.
+    """
+    while True:
+        print("\nTo-Do List Application")
+        print("1. Add Task")
+        print("2. View Tasks")
+        print("3. Update Task")
+        print("4. Delete Task")
+        print("5. Exit")
+        
+        choice = input("Enter your choice: ").strip()
+        
+        if choice == "1":
+            add_task()
+        elif choice == "2":
+            view_tasks()
+        elif choice == "3":
+            update_task()
+        elif choice == "4":
+            delete_task()
+        elif choice == "5":
+            print("Exiting the application. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
